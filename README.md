@@ -2,6 +2,6 @@
 
 ## Technologies
 - Java 11
-- Apache Maven
+- Maven
 - Hibernate
 - Maven
