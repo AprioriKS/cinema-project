@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ShoppingCartMapper implements
-    ResponseDtoMapper<ShoppingCartResponseDto, ShoppingCart> {
+        ResponseDtoMapper<ShoppingCartResponseDto, ShoppingCart> {
 
     @Override
     public ShoppingCartResponseDto mapToDto(ShoppingCart shoppingCart) {
