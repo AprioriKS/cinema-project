@@ -32,7 +32,8 @@ Simple WEB application that supports registration, authentication and CRUD opera
 2. Install MySQL or any other relational database compatible with Hibernate.
 3. Configure db.properties with your credentials.
 4. Configure tomcat server. I suggest using 9.0.50 versions. For versions above 9 you may need to change dependencies.
-5. You already have registered user (alice@gmail.com 1234 ROLE_USER)
+5. You already have registered two users (alice@gmail.com 1234 ROLE_USER and admin@gmail.com 
+admin123 ROLE_ADMIN)
 6. Or you can add users and roles manually.
 7. Done! Run and enjoy! 🎉
 

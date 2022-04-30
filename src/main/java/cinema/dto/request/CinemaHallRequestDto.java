@@ -1,12 +1,12 @@
 package cinema.dto.request;
 
-import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
 
 public class CinemaHallRequestDto {
-    @Min(value = 50)
-    @Max(value = 200)
+    @Min(10)
     private int capacity;
+    @Size(max = 200)
     private String description;
 
     public int getCapacity() {

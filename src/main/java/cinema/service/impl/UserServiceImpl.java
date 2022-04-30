@@ -9,17 +9,17 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImpl implements UserService {
+    private final PasswordEncoder encoder;
     private final UserDao userDao;
-    private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserDao userDao, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(PasswordEncoder encoder, UserDao userDao) {
+        this.encoder = encoder;
         this.userDao = userDao;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public User add(User user) {
-        passwordEncoder.encode(user.getPassword());
+        user.setPassword(encoder.encode(user.getPassword()));
         return userDao.add(user);
     }
 
