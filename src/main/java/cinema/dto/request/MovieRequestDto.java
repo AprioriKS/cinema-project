@@ -1,12 +1,11 @@
 package cinema.dto.request;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.NotBlank;
 
 public class MovieRequestDto {
-    @NotNull
+    @NotBlank
     private String title;
-    @Size(max = 200)
+    @NotBlank
     private String description;
 
     public String getTitle() {
