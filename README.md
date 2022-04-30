@@ -35,3 +35,4 @@ Simple WEB application that supports registration, authentication and CRUD opera
 5. You already have registered user (alice@gmail.com 1234 ROLE_USER)
 6. Or you can add users and roles manually.
 7. Done! Run and enjoy! 🎉
+
