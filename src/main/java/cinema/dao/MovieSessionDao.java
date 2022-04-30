@@ -6,9 +6,13 @@ import java.util.List;
 import java.util.Optional;
 
 public interface MovieSessionDao {
-    List<MovieSession> findAvailableSessions(Long movieId, LocalDate date);
+    MovieSession add(MovieSession movieSession);
 
     Optional<MovieSession> get(Long id);
 
-    MovieSession add(MovieSession session);
+    List<MovieSession> findAvailableSessions(Long movieId, LocalDate date);
+
+    MovieSession update(MovieSession movieSession);
+
+    void delete(Long id);
 }

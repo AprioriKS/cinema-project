@@ -2,23 +2,29 @@ package cinema.dao.impl;
 
 import cinema.dao.MovieDao;
 import cinema.exception.DataProcessingException;
-import cinema.lib.Dao;
 import cinema.model.Movie;
-import cinema.util.HibernateUtil;
 import java.util.List;
 import java.util.Optional;
-import javax.persistence.criteria.CriteriaQuery;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+import org.springframework.stereotype.Repository;
 
-@Dao
+@Repository
 public class MovieDaoImpl implements MovieDao {
+    private final SessionFactory factory;
+
+    public MovieDaoImpl(SessionFactory factory) {
+        this.factory = factory;
+    }
+
     @Override
     public Movie add(Movie movie) {
         Transaction transaction = null;
         Session session = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = factory.openSession();
             transaction = session.beginTransaction();
             session.save(movie);
             transaction.commit();
@@ -27,7 +33,7 @@ public class MovieDaoImpl implements MovieDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can't insert a movie: " + movie, e);
+            throw new DataProcessingException("Can't insert movie " + movie, e);
         } finally {
             if (session != null) {
                 session.close();
@@ -37,22 +43,22 @@ public class MovieDaoImpl implements MovieDao {
 
     @Override
     public Optional<Movie> get(Long id) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return Optional.ofNullable(session.get(Movie.class, id));
+        try (Session session = factory.openSession()) {
+            return session.createQuery("FROM Movie WHERE id = :id", Movie.class)
+                    .setParameter("id", id)
+                    .uniqueResultOptional();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get a movie by id: " + id, e);
+            throw new DataProcessingException("Can't get movie, id: " + id, e);
         }
     }
 
     @Override
     public List<Movie> getAll() {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            CriteriaQuery<Movie> criteriaQuery = session.getCriteriaBuilder()
-                    .createQuery(Movie.class);
-            criteriaQuery.from(Movie.class);
-            return session.createQuery(criteriaQuery).getResultList();
+        try (Session session = factory.openSession()) {
+            Query<Movie> getAllMoviesQuery = session.createQuery("FROM Movie", Movie.class);
+            return getAllMoviesQuery.getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get all movies", e);
+            throw new DataProcessingException("Can't get all movies from db", e);
         }
     }
 }
