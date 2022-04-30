@@ -1,4 +1,4 @@
-![cinema app logo](cinema-project.png)
+![cinema app logo](readme.images/cinema-project.png)
 
 # Сinema App
 Simple WEB application that supports registration, authentication and CRUD operations.
