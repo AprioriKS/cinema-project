@@ -1,43 +1,19 @@
 package cinema.dao.impl;
 
+import cinema.dao.AbstractDao;
 import cinema.dao.ShoppingCartDao;
 import cinema.exception.DataProcessingException;
 import cinema.model.ShoppingCart;
 import cinema.model.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ShoppingCartDaoImpl implements ShoppingCartDao {
-    private final SessionFactory factory;
-
+public class ShoppingCartDaoImpl extends AbstractDao<ShoppingCart> implements ShoppingCartDao {
     public ShoppingCartDaoImpl(SessionFactory factory) {
-        this.factory = factory;
-    }
-
-    @Override
-    public ShoppingCart add(ShoppingCart shoppingCart) {
-        Transaction transaction = null;
-        Session session = null;
-        try {
-            session = factory.openSession();
-            transaction = session.beginTransaction();
-            session.save(shoppingCart);
-            transaction.commit();
-            return shoppingCart;
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            throw new DataProcessingException("Can't insert shopping cart " + shoppingCart, e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
+        super(factory, ShoppingCart.class);
     }
 
     @Override
@@ -53,28 +29,7 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
             getByUser.setParameter("user", user);
             return getByUser.getSingleResult();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get user's shopping cart " + user, e);
-        }
-    }
-
-    @Override
-    public void update(ShoppingCart shoppingCart) {
-        Transaction transaction = null;
-        Session session = null;
-        try {
-            session = factory.openSession();
-            transaction = session.beginTransaction();
-            session.merge(shoppingCart);
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            throw new DataProcessingException("Can't update shopping cart " + shoppingCart, e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
+            throw new DataProcessingException("Not found shopping cart for user " + user, e);
         }
     }
 }

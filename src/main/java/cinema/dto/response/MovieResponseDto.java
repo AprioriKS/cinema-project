@@ -1,31 +1,31 @@
 package cinema.dto.response;
 
 public class MovieResponseDto {
-    private Long movieId;
-    private String movieTitle;
-    private String movieDescription;
+    private Long id;
+    private String title;
+    private String description;
 
-    public Long getMovieId() {
-        return movieId;
+    public Long getId() {
+        return id;
     }
 
-    public void setMovieId(Long movieId) {
-        this.movieId = movieId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public String getMovieTitle() {
-        return movieTitle;
+    public String getTitle() {
+        return title;
     }
 
-    public void setMovieTitle(String movieTitle) {
-        this.movieTitle = movieTitle;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getMovieDescription() {
-        return movieDescription;
+    public String getDescription() {
+        return description;
     }
 
-    public void setMovieDescription(String movieDescription) {
-        this.movieDescription = movieDescription;
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

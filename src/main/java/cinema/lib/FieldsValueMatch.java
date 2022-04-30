@@ -1,4 +1,4 @@
-package cinema.validation;
+package cinema.lib;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -7,11 +7,17 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
-@Constraint(validatedBy = EmailValidator.class)
-@Target({ElementType.PARAMETER, ElementType.FIELD})
+@Constraint(validatedBy = FieldsValueMatchValidator.class)
+@Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Email {
-    String message() default "Invalid email!";
+public @interface FieldsValueMatch {
+    String message() default "Fields values don't match!";
+
+    String field();
+
+    String fieldMatch();
+
     Class<?>[] groups() default {};
+
     Class<? extends Payload>[] payload() default {};
 }
